@@ -1,0 +1,54 @@
+
+.about {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f1f5f9;
+}
+
+/* Container */
+.about-container {
+    max-width: 800px;
+    text-align: center;
+    padding: 40px;
+}
+
+/* Title */
+.about-title {
+    font-size: 40px;
+    color: #0f172a;
+    margin-bottom: 20px;
+}
+
+/* Paragraph */
+.about-text {
+    font-size: 18px;
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* Highlight box */
+.about-highlight {
+    margin-top: 30px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: #38bdf8;
+    border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .about-title {
+        font-size: 32px;
+    }
+
+    .about-text {
+        font-size: 16px;
+    }
+
+}

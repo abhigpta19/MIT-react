@@ -1,0 +1,96 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f4f6fb;
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 26px;
+  color: #555;
+}
+
+/* Flex layout */
+.todo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card */
+.todo-card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+
+  /* 🔥 responsive flex sizing */
+  flex: 1 1 250px;
+  max-width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hover effect */
+.todo-card:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* Text */
+.todo-text {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* Badge */
+.badge {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+/* Completed */
+.completed {
+  border-left: 6px solid #00c853;
+}
+
+.completed .badge {
+  background: #e6fffa;
+  color: #00a152;
+}
+
+/* Pending */
+.pending {
+  border-left: 6px solid #ff9800;
+}
+
+.pending .badge {
+  background: #fff3e0;
+  color: #e65100;
+}
