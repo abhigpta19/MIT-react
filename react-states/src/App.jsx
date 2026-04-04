@@ -331,50 +331,186 @@
 // export default App
 
 
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import TodoShimmer from "./TodoShimmer";
+// import React, { useState, useEffect } from "react";
+// import "./App.css";
+// import TodoShimmer from "./TodoShimmer";
+
+// function App() {
+//   const [search, setSearch] = useState("");
+//   const [todos, setTodos] = useState([]);
+//   const [allTodos, setAllTodos] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   console.log("app rendered");
+
+//   async function handleApi() {
+//     const response = await fetch("https://dummyjson.com/todos");
+//     const data = await response.json();
+
+//     setAllTodos(data.todos);
+//     setLoading(false);
+//   }
+
+//   useEffect(() => {
+//     handleApi();
+//   }, []);
+
+//   useEffect(()=>{
+    
+//     const newTodos = allTodos.filter(function(val){
+//       return val.todo.toLowerCase().includes(search.toLowerCase());
+//     });
+//     setTodos(newTodos);
+//   },[search]);
+
+//   // return <TodoShimmer/>
+
+
+//   return (
+//     <div className="container">
+//       <h1 className="title">📝 Todo Dashboard</h1>
+
+//       <input type="text" value={search} onChange={(e)=>setSearch(e.target.value)} />
+
+//       {loading?<TodoShimmer/>:<div className="todo-grid">
+//         {todos.map((val) => {
+//           return (
+//             <div
+//               key={val.id}
+//               className={`todo-card ${
+//                 val.completed ? "completed" : "pending"
+//               }`}
+//             >
+//               <h3 className="todo-text">{val.todo}</h3>
+//               <span className="badge">
+//                 {val.completed ? "Done" : "Pending"}
+//               </span>
+//             </div>
+//           );
+//         })}
+//       </div>}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+// import React,{useState,useEffect, useRef} from 'react'
+// import TodoShimmer from './TodoShimmer'
+
+// function App() {
+
+//   const [allTodos, setAllTodos] = useState([]);
+//   const [filteredTodos, setFilteredTodos] = useState([]);
+//   const [search, setSearch] = useState("");
+//   const [loading, setLoading] = useState(true);
+//   // const timeoutId = useRef(null);
+
+//   async function handleApi()
+//   {
+//     const response = await fetch("https://dummyjson.com/todos");
+//     const data = await response.json();
+
+//     setAllTodos(data.todos);
+//     setLoading(false);
+//   }
+
+//   function handleSearch(){
+//     console.log("the filtering triggered");
+//     const filtered = allTodos.filter(function(val){
+//       return val.todo.toLowerCase().includes(search.toLowerCase());
+//     });
+//     setFilteredTodos(filtered);
+//   }
+
+//   useEffect(function(){
+//     handleApi();
+//   },[])
+
+//   useEffect(function(){
+
+//     const timeoutId = setTimeout(handleSearch,500);
+
+//     return function(){
+//       clearTimeout(timeoutId);
+//     }
+//   },[search,allTodos])
+
+//   if(loading)
+//     return <TodoShimmer/>;
+  
+
+//   return (
+//     <div>
+//       <h1>Todo List</h1>
+//       <input type="text" value={search} onChange={(e)=>setSearch(e.target.value)} />
+//       <ul>
+//         {filteredTodos.map((val)=>(
+//           <li key={val.id}>{val.todo}</li>
+//         ))}
+//       </ul>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+// import React from 'react'
+// import { AbortableSearch } from './components/AbortableSearch'
+
+// function App() {
+
+//   const [todos, setTodos] = React.useState([]);
+//   const controllerRef = React.useRef(null);
+
+//     async function handleApi()
+//   {
+//     if(controllerRef.current)
+//     {
+//       controllerRef.current.abort();
+//     }
+
+//     const controller = new AbortController();
+//     controllerRef.current = controller;
+
+//     const response = await fetch("https://dummyjson.com/todos",{signal: controller.signal });
+//     const data = await response.json();
+
+//     setTodos(data.todos);
+
+//   }
+
+  
+//     return (
+//     <div>
+//       <h1>Todo List</h1>
+//       <button onClick={handleApi}>Fetch Data</button>
+//       <ul>
+//         {todos.map((val)=>(
+//           <li key={val.id}>{val.todo}</li>
+//         ))}
+//       </ul>
+//     </div>
+//   )
+// }
+
+
+// export default App
+
+
+
+import React from 'react'
+import { AbortableSearch } from './components/AbortableSearch'
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  async function handleApi() {
-    const response = await fetch("https://dummyjson.com/todos");
-    const data = await response.json();
-
-    setTodos(data.todos);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    handleApi();
-  }, []);
-
-
   return (
-    <div className="container">
-      <h1 className="title">📝 Todo Dashboard</h1>
+    <div>
+      <AbortableSearch />
 
-      {loading?<TodoShimmer/>:<div className="todo-grid">
-        {todos.map((val) => {
-          return (
-            <div
-              key={val.id}
-              className={`todo-card ${
-                val.completed ? "completed" : "pending"
-              }`}
-            >
-              <h3 className="todo-text">{val.todo}</h3>
-              <span className="badge">
-                {val.completed ? "Done" : "Pending"}
-              </span>
-            </div>
-          );
-        })}
-      </div>}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
