@@ -501,16 +501,450 @@
 
 
 
-import React from 'react'
-import { AbortableSearch } from './components/AbortableSearch'
+// import React,{useMemo} from 'react'
+// import { AbortableSearch } from './components/AbortableSearch'
 
-function App() {
-  return (
-    <div>
-      <AbortableSearch />
+// const Child = React.memo(function({val, handleClick}){
+//   console.log("the child rendered");
 
-    </div>
-  )
+//   return (<>
+//       <h1>{val.value}</h1>
+//     <button onClick={handleClick}>Click me</button>
+//     </>);
+// })
+
+// function App() {
+
+//   const [count, setCount] = React.useState(0);
+
+//   const val = useMemo(function(){
+//     return {value : 10};
+//   },[]);
+
+//   const handleClick = React.useCallback(function(){ 
+//     console.log("the button is clicked without callback")
+//   },[]);
+
+//   return (
+//     <div>
+//       <Child val={val} handleClick={handleClick}/>
+
+//      <h1>Count : {count}</h1>
+//      <button onClick={()=>setCount(count+1)}>Inc Count</button>
+
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+
+
+
+// function App() {
+//   const [query, setQuery] = useState("");
+
+//   const debounceRef = useRef(null);
+
+//   const handleSearch = (value) => {
+//     clearTimeout(debounceRef.current);
+
+//     debounceRef.current = setTimeout(() => {
+//       console.log("API Call:", value);
+//     }, 500);
+//   };
+
+//   const controllerRef = useRef(null);
+
+// const fetchData = async (query) => {
+//   if (controllerRef.current) {
+//     controllerRef.current.abort();
+//   }
+
+//   controllerRef.current = new AbortController();
+
+//   try {
+//     const res = await fetch(`/api?q=${query}`, {
+//       signal: controllerRef.current.signal,
+//     });
+//     const data = await res.json();
+//   } catch (err) {
+//     if (err.name === "AbortError") {
+//       console.log("Request cancelled");
+//     }
+//   }
+// };
+
+// const filteredData = useMemo(() => {
+//   console.log("Filtering...");
+//   return data.filter(item => item.includes(query));
+// }, [data, query]);
+
+//   return (
+//     <input
+//       value={query}
+//       onChange={(e) => setQuery(e.target.value)}
+//     />
+//   );
+// }
+
+
+// import React, {
+//   useState,
+//   useMemo,
+//   useCallback,
+//   useRef,
+//   useEffect,
+// } from "react";
+
+// // 🔥 Render Counter Hook
+// function useRenderCount(name) {
+//   const count = useRef(0);
+//   count.current++;
+//   console.log(`${name} rendered:`, count.current);
+//   return count.current;
+// }
+
+// // 🔥 Child Component (List)
+// const List = React.memo(({ items }) => {
+//   const renders = useRenderCount("List");
+
+//   return (
+//     <div style={styles.box}>
+//       <h3>List Component (renders: {renders})</h3>
+//       {items.map((item) => (
+//         <div key={item.id}>{item.todo}</div>
+//       ))}
+//     </div>
+//   );
+// });
+
+// // 🔥 Child Component (Button)
+// const Button = React.memo(({ onClick }) => {
+//   const renders = useRenderCount("Button");
+
+//   return (
+//     <div style={styles.box}>
+//       <h3>Button Component (renders: {renders})</h3>
+//       <button onClick={onClick}>Click Me</button>
+//     </div>
+//   );
+// });
+
+// export default function Hashing() {
+//   const [count, setCount] = useState(0);
+//   const [search, setSearch] = useState("");
+//   const [todos, setTodos] = useState([]);
+
+//   const renders = useRenderCount("App");
+
+//   // 🔥 Fetch data from DummyJSON
+//   useEffect(() => {
+//     console.log("🌐 Fetching todos...");
+//     fetch("https://dummyjson.com/todos?limit=100")
+//       .then((res) => res.json())
+//       .then((data) => setTodos(data.todos));
+//   }, []);
+
+//   // ❌ BAD: Filtering runs on EVERY render
+//   const filteredItems = useCallback(() => {
+//     console.log("❌ Filtering items...");
+//     return todos.filter((item) =>
+//       item.todo.toLowerCase().includes(search.toLowerCase())
+//     );
+//   };
+
+//   // ❌ BAD: new function every render
+//   const handleClick = () => {
+//     console.log("button clicked");
+//   };
+
+//   return (
+//     <div style={styles.container}>
+//       <h2>🔥 React Optimization Demo (With API)</h2>
+//       <h3>App renders: {renders}</h3>
+
+//       {/* Search */}
+//       <input
+//         style={styles.input}
+//         placeholder="Search todos..."
+//         value={search}
+//         onChange={(e) => setSearch(e.target.value)}
+//       />
+
+//       {/* Re-render trigger */}
+//       <button onClick={() => setCount(count + 1)}>
+//         Re-render App ({count})
+//       </button>
+
+//       <div style={styles.flex}>
+//         <List items={filteredItems()} />
+//         <Button onClick={handleClick} />
+//       </div>
+//     </div>
+//   );
+// }
+
+// const styles = {
+//   container: {
+//     padding: "20px",
+//     fontFamily: "sans-serif",
+//   },
+//   flex: {
+//     display: "flex",
+//     gap: "20px",
+//     marginTop: "20px",
+//   },
+//   box: {
+//     border: "1px solid #ccc",
+//     padding: "10px",
+//     width: "300px",
+//     maxHeight: "300px",
+//     overflowY: "auto",
+//   },
+//   input: {
+//     padding: "8px",
+//     marginRight: "10px",
+//   },
+// };
+
+
+
+
+
+
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
+
+// 🔥 Render Counter Hook
+function useRenderCount(name) {
+  const count = useRef(0);
+  count.current++;
+  console.log(`${name} rendered:`, count.current);
+  return count.current;
 }
 
-export default App
+// 🔥 Child Component (List)
+const List = React.memo(({ items, type }) => {
+  const renders = useRenderCount("List");
+
+  return (
+    <div style={styles.box}>
+      <h3>List ({type}) renders: {renders}</h3>
+
+      {items.map((item, i) => (
+        <div key={i}>
+          {type === "todos" ? item.todo : item.login}
+        </div>
+      ))}
+    </div>
+  );
+});
+
+// 🔥 Child Component (Button)
+const Button = React.memo(({ onClick }) => {
+  const renders = useRenderCount("Button");
+
+  return (
+    <div style={styles.box}>
+      <h3>Button renders: {renders}</h3>
+      <button onClick={onClick}>Click Me</button>
+    </div>
+  );
+});
+
+export default function Hashing() {
+  const [count, setCount] = useState(0);
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState([]);
+  const [type, setType] = useState("todos"); // 🔥 which API
+
+  const renders = useRenderCount("App");
+
+  // 🔥 Fetch TODOS
+  const fetchTodos = async () => {
+    console.log("🌐 Fetching TODOS...");
+    const res = await fetch("https://dummyjson.com/todos?limit=100");
+    const json = await res.json();
+    setData(json.todos);
+    setType("todos");
+  };
+
+  // 🔥 Fetch USERS
+  const fetchUsers = async () => {
+    console.log("🌐 Fetching USERS...");
+    const res = await fetch("https://api.github.com/users");
+    const json = await res.json();
+    setData(json);
+    setType("users");
+  };
+
+  // ❌ BAD: filtering runs every render
+  const filteredItems = () => {
+    console.log("❌ Filtering items...");
+    return data.filter((item) => {
+      const value =
+        type === "todos" ? item.todo : item.login;
+
+      return value
+        ?.toLowerCase()
+        .includes(search.toLowerCase());
+    });
+  };
+
+  // ❌ BAD: new function each render
+  const handleClick = () => {
+    console.log("button clicked");
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>🔥 React Optimization Demo (Multi API)</h2>
+      <h3>App renders: {renders}</h3>
+
+      {/* Search */}
+      <input
+        style={styles.input}
+        placeholder="Search..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      {/* Buttons */}
+      <div style={{ marginTop: "10px" }}>
+        <button onClick={() => setCount(count + 1)}>
+          Re-render App ({count})
+        </button>
+
+        <button onClick={fetchTodos} style={{ marginLeft: "10px" }}>
+          Load Todos
+        </button>
+
+        <button onClick={fetchUsers} style={{ marginLeft: "10px" }}>
+          Load Users
+        </button>
+      </div>
+
+      <div style={styles.flex}>
+        <List items={filteredItems()} type={type} />
+        <Button onClick={handleClick} />
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    padding: "20px",
+    fontFamily: "sans-serif",
+  },
+  flex: {
+    display: "flex",
+    gap: "20px",
+    marginTop: "20px",
+  },
+  box: {
+    border: "1px solid #ccc",
+    padding: "10px",
+    width: "300px",
+    maxHeight: "300px",
+    overflowY: "auto",
+  },
+  input: {
+    padding: "8px",
+    marginRight: "10px",
+  },
+};
+
+
+// import React,{useState, memo, useMemo, useCallback} from 'react'
+
+// const Child= memo(function({val, handleClick}) {
+
+//   console.log("the child rendered")
+//   return (
+//     <div>
+//       <h1>Value : {val.value}</h1>
+//       <button onClick={handleClick}>Click Child</button>
+//     </div>
+//   )
+// })
+
+
+// function App() {
+//   const [count, setCount] = useState(0);
+
+//   console.log("App rendered");
+
+//   // const handleChildClick = useMemo(function(){
+//   //   return function()
+//   // {
+//   //   console.log("the child button is clicked")
+//   // }},[]);  wrong method
+
+//   const handleChildClick = useCallback(function(){
+//     console.log("teh child button is clicked");
+//   },[]);
+
+//   const val = useMemo(function(){
+//     return {value : 10};
+//   },[]);
+
+ 
+
+//   return (
+//     <div>
+//       <h1>Count: {count}</h1>
+//       <button onClick={()=>setCount(count+1)}>Click App</button>
+
+//       <Child val={val} handleClick={handleChildClick}/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+
+
+
+
+// function App() {
+
+//   const [count, setCount] = useState(0);
+//   const [count2, setCount2] = useState(0);
+
+//   function heavyfn(val)
+//   {
+//     console.log("the heavy function is called");
+//     for(let i=0;i<1000000000;i++);
+
+//     return 2*val;
+
+//   }
+
+//   // const val = heavyfn()
+//   const val = useMemo(function(){
+//     return heavyfn(count);
+//   },[count]);
+//   // const val = 10;
+
+//   return (
+//     <div>
+//       <h1>Val: {val}</h1>
+//        <h1>Count : {count}</h1>
+//       <button onClick={()=>setCount(count+1)}>Click</button>
+
+//       <h1>Count2 : {count2}</h1>
+//       <button onClick={()=>setCount2(count2+1)}>Click count 2</button>
+//     </div>
+//   )
+// }
+
+// export default App
