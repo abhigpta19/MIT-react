@@ -23,7 +23,7 @@ import { Link, NavLink } from 'react-router-dom'
 function Header() {
   return (
     <div>
-      <NavLink to="/">Home</NavLink>
+      <NavLink to="/" style={(isActive) => { return { backgroundColor: isActive ? 'lightgray' : 'white' } }}>Home</NavLink>
       <NavLink to="/contacts">Contacts</NavLink>
     </div>
   )
