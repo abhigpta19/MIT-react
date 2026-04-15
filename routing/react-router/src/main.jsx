@@ -96,7 +96,6 @@ const routes = createBrowserRouter([
       },
       {
         path: "/about",
-
         element: (<ProtectedRoute>
           <About/>
           </ProtectedRoute>),
