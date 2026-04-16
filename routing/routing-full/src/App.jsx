@@ -1,4 +1,4 @@
-import React,{lazy, Suspense} from 'react'
+import {lazy, Suspense} from 'react'
 import { Outlet, createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
 
 const Header = lazy(()=>import('./components/Header.jsx'));
@@ -10,10 +10,7 @@ const FeedbackPage = lazy(()=>import('./components/FeedbackPage.jsx'));
 const DynamicName = lazy(()=>import('./components/DynamicName.jsx'));
 const Login = lazy(()=>import('./components/Login.jsx'));
 const Logout = lazy(()=>import('./components/Logout.jsx'));
-import ProtectedRoute from './components/ProtectedRoute.jsx';
-
-
-
+const ProtectedRoute = lazy(()=>import('./components/ProtectedRoute.jsx'));
 
 function AppLayout()
 {

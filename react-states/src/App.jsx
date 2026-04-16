@@ -833,7 +833,6 @@ export default function Hashing() {
 
       <div style={styles.flex}>
         <List items={filteredItems()} type={type} />
-        <Button onClick={handleClick} />
       </div>
     </div>
   );
