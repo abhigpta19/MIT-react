@@ -16,7 +16,6 @@ function Header() {
 
     return (
         <>
-            <h1>Width:{size.width} Height:{size.height}</h1>
             <ul className='list-container' ref={ref}>
                 <div className='list-container'>
                     <li className='list-item'><NavLink to="/" style={handleStyle}>Home</NavLink></li>
@@ -25,6 +24,9 @@ function Header() {
                     <li className='list-item'><NavLink to="/contact" style={handleStyle}>Contact</NavLink></li>
                     <li className='list-item'><NavLink to="/about" style={handleStyle}>About Us</NavLink></li>
                 </div>
+                <div className='header-dimensions'>
+                Width: {size.width}px | Height: {size.height}px
+            </div>
                 <div className='list-container'>
                     {isAuth ? <li><NavLink to="/logout">Logout</NavLink></li> : (
                         <>

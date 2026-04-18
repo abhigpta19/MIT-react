@@ -1,26 +1,26 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-function Signup() {
-    const { signup } = useAuth();
+function Login() {
+    const { login } = useAuth();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
 
-    function handleSignup() {
-        const result = signup(name, password, confirmPassword);
-
+    function handleLogin() {
+        const result = login(name, password);
+        
         if (!result.success) {
             setError(result.error);
             return;
         }
 
-        alert("Signup successful! Please login.");
+        alert("Login successful");
         setError("");
-        navigate("/login");
+        navigate(location.state?.from?.pathname || "/");
     }
 
     return (
@@ -35,13 +35,9 @@ function Signup() {
                 <label>Password</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-            <div>
-                <label>Confirm Password</label>
-                <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            </div>
-            <button disabled={!(name && password && confirmPassword)} onClick={handleSignup}>Signup</button>
+            <button disabled={!(name && password)} onClick={handleLogin}>Login</button>
         </div>
     )
 }
 
-export default Signup
+export default Login

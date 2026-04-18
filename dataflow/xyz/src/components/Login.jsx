@@ -1,44 +1,46 @@
 import React, { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 function Login() {
+    const { login } = useAuth();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const location = useLocation();
+    console.log("login",location);
 
-    function handleLogin()
-    {
-        const regiteredStr = localStorage.getItem("registered");
-        const registeredUsers = JSON.parse(regiteredStr) || {};
+    function handleLogin() {
+        const result = login(name, password);
         
-        if(!registeredUsers[name])
-        {
-            alert("user not found");
+        if (!result.success) {
+            setError(result.error);
             return;
         }
 
-        if(password !== registeredUsers[name])
-        {
-            alert("incorrect password");
-            return;
-        }
+        alert("Login successful");
+        setError("");
+        // navigate("/");
 
-        alert("login successful")
-        localStorage.setItem("auth",true);
+        navigate(location.state || "/");
     }
 
-  return (
-    <div style={{border:"2px solid black", margin: "10px",padding: "10px"}}>
-        <div>
-            <lable>UserName</lable>
-            <input type="text" value={name} onChange={(e)=>setName(e.target.value)} />
+    return (
+        <div style={{ border: "2px solid black", margin: "10px", padding: "10px" }}>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <div>
+                <label>UserName</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+
+            <div>
+                <label>Password</label>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <button disabled={!(name && password)} onClick={handleLogin}>Login</button>
         </div>
-        
-        <div>
-            <label>Password</label>
-            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
-        </div>
-        <button disabled={!(name && password)} onClick={handleLogin}>Login</button>
-    </div>
-  )
+    )
 }
 
 export default Login
