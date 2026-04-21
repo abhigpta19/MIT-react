@@ -8,8 +8,6 @@ import { useComponentSize } from '../hooks/useComponentSize';
 function Todos() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const windowWidth = useWindowWidth();
-  const {ref, size} = useComponentSize();
 
   // Fetch all todos
   const { data: allTodos, loading, error } = useFetch('https://dummyjson.com/todos');
@@ -28,7 +26,6 @@ function Todos() {
   return (
     <div className='todos-container'>
       <h1>Todo List</h1>
-      <h1>Window Width : {windowWidth}</h1>
 
       <div className='search-box'>
         <input
@@ -49,8 +46,7 @@ function Todos() {
           {debouncedSearchTerm ? `No todos found for "${debouncedSearchTerm}"` : 'No todos available'}
         </div>
       )}
-      <h1>width:{size.width} height:{size.height}</h1>
-      <div className='todos-grid' ref={ref}>
+      <div className='todos-grid'>
         {filteredTodos.map((todo) => (
           <div key={todo.id} className={`todo-card ${todo.completed ? 'completed' : ''}`}>
             <div className='todo-header'>

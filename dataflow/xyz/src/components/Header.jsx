@@ -6,7 +6,6 @@ import './Header.css'
 
 function Header() {
     const { isAuth } = useAuth();
-    const { ref, size } = useComponentSize();
 
     function handleStyle({ isActive }) {
         return {
@@ -16,8 +15,7 @@ function Header() {
 
     return (
         <>
-            <h1>Width:{size.width} Height:{size.height}</h1>
-            <ul className='list-container' ref={ref}>
+            <ul className='list-container'>
                 <div className='list-container'>
                     <li className='list-item'><NavLink to="/" style={handleStyle}>Home</NavLink></li>
                     <li className='list-item'><NavLink to="/github" style={handleStyle}>Github</NavLink></li>
