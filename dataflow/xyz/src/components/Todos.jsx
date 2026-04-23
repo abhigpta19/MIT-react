@@ -4,13 +4,14 @@ import { useFetch } from '../hooks/useFetch';
 import './Todos.css';
 import { useWindowWidth } from '../hooks/useWindowWidth';
 import { useComponentSize } from '../hooks/useComponentSize';
+import { TODO_API } from '../const/api';
 
 function Todos() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   // Fetch all todos
-  const { data: allTodos, loading, error } = useFetch('https://dummyjson.com/todos');
+  const { data: allTodos, loading, error } = useFetch(TODO_API);
 
   // Memoize the expensive filter operation - only runs when debouncedSearchTerm changes
   const filteredTodos = useMemo(() => {

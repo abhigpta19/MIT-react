@@ -1,18 +1,16 @@
 import React,{createContext} from 'react'
 import { Outlet } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext.js';
-import { ThemeContext } from '../contexts/ThemeContext.js';
+import { UserProvider } from '../contexts/UserContext.js';
+import { ThemeProvider } from '../contexts/ThemeContext.js';
 const Navbar = React.lazy(() => import("../components/Navbar.jsx"));
 const Sidebar = React.lazy(() => import("../components/Sidebar.jsx"));
 
 function AppLayout() {
-    const [user, setUser] = React.useState({name : "default"});
-    const [theme, setTheme] = React.useState("light");
     
   return (
-    <ThemeContext.Provider value={{theme, setTheme}}>
+    <ThemeProvider>
 
-        <UserContext.Provider value={{user, setUser}}>
+        <UserProvider>
          
            <Navbar/>
 
@@ -25,8 +23,8 @@ function AppLayout() {
 
         
 
-      </UserContext.Provider>
-    </ThemeContext.Provider>
+      </UserProvider>
+    </ThemeProvider>
       
   )
 }
