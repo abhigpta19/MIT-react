@@ -1,4 +1,5 @@
 import {createStore} from 'redux'
+// import { createStore } from './redux-lite.js';
 
 const initialState = {
     name: "Abhishek Gupta",
@@ -54,3 +55,9 @@ export const store = createStore(reducer);
 store.subscribe(()=>{
     console.log(store.getState());
 })
+
+store.dispatch({type: "CHANGE_NAME", payload: "John Doe"});
+store.dispatch({type: "CHANGE_CITY", payload: "Mumbai"});
+store.dispatch({type: "INCREASE_BALANCE", payload: 500});
+store.dispatch({type: "DECREASE_BALANCE", payload: 200});
+store.dispatch({type: "CHANGE_AGE", payload: 30});

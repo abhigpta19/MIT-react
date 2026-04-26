@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { store } from './test.js'
+import { createStore } from './redux-lite.js';
 
 function App() {
 
   const [state, setState] = useState(store.getState());
   const ref = React.useRef();
+
+  createStore();
   
   useEffect(() => {
     store.subscribe(() => {
